@@ -10,19 +10,23 @@ GPIO.setup(13, GPIO.OUT, initial = GPIO.LOW) #Clockwise -- Close
 
 check = ''
 
+again = 'Y'
+
 while(check == ''):
     id, check = reader.read()
 
-while(True):
+while(again == 'Y'):
     sleep(.3)
     check = check.strip(' ')
     if(check == 'Open'):
         GPIO.output(13, GPIO.HIGH)
         print('closing')
         sleep(5)
+        GPIO.output(13, GPIO.LOW)
         reader.write('Closed')
         print('Closed')
         id, check = reader.read()
+        again = input('Would you like another iteration? Y/N: ')
     elif(check == 'Closed'):
         GPIO.output(15, GPIO.HIGH)
         print('opening')
@@ -31,6 +35,5 @@ while(True):
         reader.write('Open')
         print('Open')
         id, check = reader.read()
-        break
-    break
+        again = input('Would you like another iteration? Y/N: ')
 GPIO.cleanup()
