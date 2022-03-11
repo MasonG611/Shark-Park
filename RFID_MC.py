@@ -3,10 +3,10 @@ from time import sleep
 from mfrc522 import SimpleMFRC522
 
 reader = SimpleMFRC522()
-GPIO.setwarnings(False)
-GPIO.setup(36, GPIO.OUT, initial = GPIO.LOW) #blue
-GPIO.setup(38, GPIO.OUT, initial = GPIO.LOW) #green
-GPIO.setup(40, GPIO.OUT, initial = GPIO.LOW) #red
+
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(15, GPIO.OUT, initial = GPIO.LOW) #Counterclockwise -- Open
+GPIO.setup(13, GPIO.OUT, initial = GPIO.LOW) #Clockwise -- Close
 
 check = ''
 
@@ -17,23 +17,20 @@ while(True):
     sleep(.3)
     check = check.strip(' ')
     if(check == 'Open'):
-        GPIO.output(38, GPIO.LOW)
-        GPIO.output(36, GPIO.HIGH)
+        GPIO.output(13, GPIO.HIGH)
         print('closing')
-        sleep(3)
-        GPIO.output(36, GPIO.LOW)
-        GPIO.output(40, GPIO.HIGH)
+        sleep(5)
         reader.write('Closed')
         print('Closed')
         id, check = reader.read()
     elif(check == 'Closed'):
-        GPIO.output(40, GPIO.LOW)
-        GPIO.output(36, GPIO.HIGH)
+        GPIO.output(15, GPIO.HIGH)
         print('opening')
-        sleep(3)
-        GPIO.output(36, GPIO.LOW)
-        GPIO.output(38, GPIO.HIGH)
+        sleep(5)
+        GPIO.output(15, GPIO.LOW)
         reader.write('Open')
         print('Open')
         id, check = reader.read()
+        break
+    break
 GPIO.cleanup()
