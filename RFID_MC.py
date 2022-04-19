@@ -4,11 +4,12 @@ from mfrc522 import SimpleMFRC522
 import serial
 
 reader = SimpleMFRC522()
-ser = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
+ser = serial.Serial('/dev/ttyACM0', 19200, timeout=1)
 
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(31, GPIO.OUT, initial = GPIO.LOW) #Red -- Closed
 GPIO.setup(33, GPIO.OUT, initial = GPIO.LOW) #Green -- Opened
+GPIO.setwarnings(False)
 
 again = 'Y'
 
@@ -28,7 +29,6 @@ while(again == 'Y'):
         print(line)
         reader.write(line)
         GPIO.output(31, GPIO.HIGH)
-        print('Closed')
         again = input('Would you like another iteration? Y/N: ')
     elif(check == 'closed'):
         GPIO.output(31, GPIO.LOW)
@@ -39,6 +39,5 @@ while(again == 'Y'):
         print(line)
         reader.write(line)
         GPIO.output(33, GPIO.HIGH)
-        print('Open')
         again = input('Would you like another iteration? Y/N: ')
 GPIO.cleanup()
