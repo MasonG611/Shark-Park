@@ -20,7 +20,7 @@ nextLine = True
 while nextLine:
     file.readline()
     print(file.tell())
-    if file.tell() == (eof-1):
+    if file.tell() == (eof-4) or file.tell() == (eof-5):
         check = file.readline()
         nextLine = False
         print('line is ', check)
@@ -29,27 +29,35 @@ check.split('\n')
 
 while(True):
    # ser.reset_input_buffer()
-    sleep(.3)
-    id = reader.read()
-    id = id.strip(' ')
-    if(id and not id.isspace()):
+    id, text = reader.read()
+    sleep(1.5)
+    if(id and check.__contains__('Open')):
         GPIO.output(33, GPIO.LOW)
        # ser.write(b"close\n")
         #sleep(5)
         line = ''
-        while(line == ''):
+        while(line != 'Closed'):
             #line = ser.readline().decode('utf-8').rstrip()
+            #line.split('\n')
 #         sleep(6)
+            line = 'Closed'
             print(line)
         #reader.write(line)
         GPIO.output(31, GPIO.HIGH)
-    elif(check == 'Close'):
+        check = line
+        id = ''
+    elif(id and check.__contains__('Closed')):
         GPIO.output(31, GPIO.LOW)
         #ser.write(b"open\n")
         line = ''
-        while(line == ''):
+        while(line != 'Open'):
             #line = ser.readline().decode('utf-8').rstrip()
+            #line.split('\n')
+            line = 'Open'
             print(line)
+            
         #reader.write(line)
         GPIO.output(33, GPIO.HIGH)
+        check = line
+        id = ''
 GPIO.cleanup()
