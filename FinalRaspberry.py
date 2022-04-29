@@ -67,5 +67,3 @@ while(True):
         file.write('Open\n')
         check = 'Open'
         id = '' 
-
-GPIO.cleanup()
