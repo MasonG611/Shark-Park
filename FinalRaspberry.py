@@ -1,6 +1,7 @@
 import RPi.GPIO as GPIO
 from time import sleep
 from mfrc522 import SimpleMFRC522
+import signal
 
 GPIO.setwarnings(False)
 
@@ -29,6 +30,15 @@ def Close():
     GPIO.output(31, GPIO.HIGH)
     print('Closed')
 
+def handler(signum, frame):
+    res = input('Ctrl+c was pressed. Do you want to exit loop? Y/N: ')
+    if res.lower() == 'y':
+        GPIO.cleanup()
+        file.close()
+        exit(1)
+
+signal.signal(signal.SIGINT, handler)
+
 check = ''
 file = open('States.txt', 'r+')
 file.seek(0, 2)
@@ -37,15 +47,14 @@ file.seek(0, 0)
 nextLine = True
 while nextLine:
     file.readline()
-    print(file.tell())
     if file.tell() == (eof-5) or file.tell() == (eof-7):
         check = file.readline()
         nextLine = False
-        print('Last line is: ', check)
 
 check.split('\n')
 
 while(True):
+    print('Place tag to open or close.')
     id, text = reader.read()
     sleep(1.5)
     if(id and check.__contains__('Open')):

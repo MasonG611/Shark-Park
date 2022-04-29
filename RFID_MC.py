@@ -4,7 +4,7 @@ from mfrc522 import SimpleMFRC522
 import serial
 
 reader = SimpleMFRC522()
-ser = serial.Serial('/dev/ttyACM0', 19200, timeout=1)
+ser = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
 
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(31, GPIO.OUT, initial = GPIO.LOW) #Red -- Closed
