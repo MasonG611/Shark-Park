@@ -14,5 +14,6 @@ we've included as well as the documentation helps you all in your development ef
 Good Luck!
 - 2021-2022 Team Proton 
 
-If you need any additional help, I (Mason) will be on campus Fall 2022. Groupme contact is linked below.\n
+If you need any additional help, I (Mason) will be on campus Fall 2022. Groupme contact is linked below.
+
 Contact: https://groupme.com/contact/30021784/A3xxM9mR
